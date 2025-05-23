@@ -2,7 +2,7 @@
 
 ## 📌 Opis projektu
 
-System rezerwacji do fryzjera to aplikacja webowa napisana w języku Java z wykorzystaniem technologii JSP, Servletów oraz integracją z Google Calendar. Umożliwia klientom rezerwację wizyt, przeglądanie dostępnych terminów oraz zarządzanie swoimi rezerwacjami. System posiada także panel fryzjera do zarządzania dostępnością godzin.
+System rezerwacji do fryzjera to aplikacja webowa napisana w języku Java z wykorzystaniem technologii JSP, Servletów oraz integracją z Full Calendar. Umożliwia klientom rezerwację wizyt, przeglądanie dostępnych terminów oraz zarządzanie swoimi rezerwacjami. System posiada także panel fryzjera do zarządzania dostępnością godzin.
 
 ## ⚙️ Główne funkcjonalności
 
@@ -10,7 +10,7 @@ System rezerwacji do fryzjera to aplikacja webowa napisana w języku Java z wyko
 - Dodawanie i usuwanie dostępnych godzin przez fryzjera
 - Rezerwacja i odwoływanie wizyt przez klientów
 - Wyświetlanie kalendarza z terminami
-- Integracja z Google Calendar
+- Integracja z Full Calendar
 - Rozdzielenie panelu użytkownika i fryzjera
 - Wylogowywanie i zarządzanie sesją
 
@@ -46,7 +46,7 @@ System rezerwacji do fryzjera/
 - JSP & Servlety
 - Maven
 - HTML/CSS/JS
-- Google Calendar API
+- Full Calendar API
 - Apache Tomcat (rekomendowany)
 - MariaDB / MySQL (opcjonalnie)
 
@@ -64,7 +64,6 @@ System rezerwacji do fryzjera/
 3. **Zbuduj projekt (`mvn clean package`).**
 4. **Uruchom aplikację na serwerze (np. http://localhost:8080).**
 
-> Wymagana konfiguracja po stronie Google Developer Console, aby korzystać z API kalendarza.
 
 ## 👥 Autorzy
 
