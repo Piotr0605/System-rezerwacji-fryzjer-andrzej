@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Kalendarz pracy - Booksy style</title>
+    <style>
+        body {
+            background-color: #1c1c1c;
+            font-family: sans-serif;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background-color: #444;
+            border: 1px solid #444;
+        }
+
+        .day-name, .day {
+            padding: 15px;
+            text-align: center;
+            background-color: #2b2b2b;
+        }
+
+        .day {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .day:hover {
+            background-color: #3a3a3a;
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #2b2b2b;
+            padding: 20px;
+            border: 1px solid #555;
+            border-radius: 10px;
+            display: none;
+            z-index: 10;
+        }
+
+        .modal input {
+            margin: 5px;
+            padding: 5px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            z-index: 5;
+        }
+
+        .header-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .header-controls button {
+            background: #444;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1 id="calendar-title">Kalendarz pracy</h1>
+
+<div class="header-controls">
+    <button onclick="changeMonth(-1)">&lt; Poprzedni</button>
+    <button onclick="changeMonth(1)">Następny &gt;</button>
+</div>
+
+<div class="calendar" id="calendar"></div>
+
+<div class="overlay" id="overlay" onclick="closeModal()"></div>
+
+<div class="modal" id="modal">
+    <h3 id="modal-date"></h3>
+    <label>Od: <input type="time" id="start-time"></label><br>
+    <label>Do: <input type="time" id="end-time"></label><br>
+    <button onclick="saveHours()">Zapisz</button>
+</div>
+
+<script>
+    const calendar = document.getElementById("calendar");
+    const modal = document.getElementById("modal");
+    const overlay = document.getElementById("overlay");
+    const modalDate = document.getElementById("modal-date");
+    const startTime = document.getElementById("start-time");
+    const endTime = document.getElementById("end-time");
+    const calendarTitle = document.getElementById("calendar-title");
+
+    let selectedDate = null;
+    let current = new Date();
+    let hoursMap = {}; // { "2024-04-10": {start: "08:00", end: "17:00"} }
+
+    const daysOfWeek = ["Pn", "Wt", "Śr", "Cz", "Pt", "Sb", "Nd"];
+
+    function renderCalendar() {
+        calendar.innerHTML = "";
+        calendarTitle.innerText = `Kalendarz pracy - ${current.toLocaleString('pl-PL', { month: 'long' })} ${current.getFullYear()}`;
+
+        daysOfWeek.forEach(d => {
+            const cell = document.createElement("div");
+            cell.className = "day-name";
+            cell.innerText = d;
+            calendar.appendChild(cell);
+        });
+
+        const year = current.getFullYear();
+        const month = current.getMonth();
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+
+        const startWeekDay = (firstDay.getDay() + 6) % 7; // Pon=0, Nd=6
+
+        for (let i = 0; i < startWeekDay; i++) {
+            const empty = document.createElement("div");
+            empty.className = "day";
+            empty.style.background = "#1c1c1c";
+            calendar.appendChild(empty);
+        }
+
+        for (let day = 1; day <= lastDay.getDate(); day++) {
+            const dateStr = `${year}-${(month+1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+            const cell = document.createElement("div");
+            cell.className = "day";
+            cell.innerText = day;
+
+            if (hoursMap[dateStr]) {
+                const info = document.createElement("div");
+                info.style.fontSize = "0.8em";
+                info.innerText = `${hoursMap[dateStr].start} - ${hoursMap[dateStr].end}`;
+                cell.appendChild(info);
+            }
+
+            cell.onclick = () => openModal(dateStr);
+            calendar.appendChild(cell);
+        }
+    }
+
+    function openModal(date) {
+        selectedDate = date;
+        modalDate.innerText = `Godziny pracy dla ${date}`;
+        startTime.value = hoursMap[date]?.start || "08:00";
+        endTime.value = hoursMap[date]?.end || "17:00";
+        modal.style.display = "block";
+        overlay.style.display = "block";
+    }
+
+    function closeModal() {
+        modal.style.display = "none";
+        overlay.style.display = "none";
+    }
+
+    function saveHours() {
+        hoursMap[selectedDate] = {
+            start: startTime.value,
+            end: endTime.value
+        };
+        closeModal();
+        renderCalendar();
+    }
+
+    function changeMonth(offset) {
+        current.setMonth(current.getMonth() + offset);
+        renderCalendar();
+    }
+
+    renderCalendar();
+</script>
+
+</body>
+</html>
