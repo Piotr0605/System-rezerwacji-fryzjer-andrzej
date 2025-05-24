@@ -11,6 +11,7 @@ System rezerwacji do fryzjera to aplikacja webowa napisana w języku Java z wyko
 - Rezerwacja i odwoływanie wizyt przez klientów
 - Wyświetlanie kalendarza z terminami
 - Integracja z Full Calendar
+- Integracja z Bazą danych MariaDB
 - Rozdzielenie panelu użytkownika i fryzjera
 - Wylogowywanie i zarządzanie sesją
 
