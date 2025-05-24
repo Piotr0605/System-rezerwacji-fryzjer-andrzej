@@ -62,8 +62,86 @@ System rezerwacji do fryzjera/
 
 1. **Importuj projekt do IntelliJ IDEA lub innego IDE z obsługą Maven.**
 2. **Skonfiguruj serwer Tomcat (lub inny serwer aplikacji Java EE).**
-3. **Zbuduj projekt (`mvn clean package`).**
-4. **Uruchom aplikację na serwerze (np. http://localhost:8080).**
+3. **Skonfiguruj bazę danych (MariaDB.**
+## 📥 Instalacja MariaDB
+
+1. Pobierz MariaDB z oficjalnej strony: https://mariadb.org/download/
+2. Zainstaluj MariaDB (w czasie instalacji zapamiętaj hasło roota).
+3. Uruchom serwer MariaDB.
+
+---
+
+## 🛠️ Konfiguracja bazy danych
+
+1. Zaloguj się do MariaDB:
+    bash
+    mysql -u root -p
+    
+
+2. Utwórz bazę danych:
+    sql
+    CREATE DATABASE fryzjer;
+    USE fryzjer;
+    
+
+3. Utwórz tabele:
+
+    sql
+    CREATE TABLE users (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        first_name VARCHAR(50),
+        last_name VARCHAR(50),
+        email VARCHAR(100) UNIQUE,
+        password VARCHAR(255),
+        phone VARCHAR(20),
+        role VARCHAR(20)
+    );
+
+    CREATE TABLE godziny_pracy (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        fryzjer_id INT,
+        data DATE NOT NULL,
+        godzina_start TIME NOT NULL,
+        godzina_koniec TIME NOT NULL
+    );
+
+    CREATE TABLE rezerwacje (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        klient_id INT NOT NULL,
+        godziny_pracy_id INT NOT NULL,
+        godzina_rezerwacji TIME NOT NULL,
+        data_rezerwacji DATETIME DEFAULT current_timestamp()
+    );
+3. Utwórz konto fryzjera (administratora):
+   sql
+    USE fryzjer
+Użyj poniższego zapytania SQL, aby dodać fryzjera do tabeli users:
+
+INSERT INTO users (first_name, last_name, email, password, phone, role)
+VALUES ('Stanisław', 'Kowalewski', 'stanislaw.kowalewski@salon.pl', 'stas324', '123456789', 'fryzjer'); ## Przykładowe dane 
+---
+
+## ⚙️ Konfiguracja po stronie aplikacji
+
+1. Skonfiguruj połączenie z bazą w klasie DatabaseConnection.java:
+    java
+    private static final String URL = "jdbc:mariadb://localhost:3306/fryzjer";
+    private static final String USER = "root";
+    private static final String PASSWORD = "twoje_haslo";
+    
+
+2. Załaduj projekt w IntelliJ IDEA.
+3. Upewnij się, że masz ustawiony serwer Tomcat w konfiguracji uruchamiania.
+4. Uruchom projekt i otwórz http://localhost:8080.
+
+---
+
+## 📋 Uwagi
+
+- Pamiętaj, aby w bazie dodać przynajmniej jednego użytkownika o roli fryzjer, aby mieć dostęp do widoku zarządzania godzinami 
+
+5. **Zbuduj projekt (`mvn clean package`).**
+6. **Uruchom aplikację na serwerze (np. http://localhost:8080).**
 
 
 ## 👥 Autorzy
