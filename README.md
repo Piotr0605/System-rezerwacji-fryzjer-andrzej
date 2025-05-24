@@ -140,7 +140,9 @@ VALUES ('Stanisław', 'Kowalewski', 'stanislaw.kowalewski@salon.pl', 'stas324', 
     java
    
     private static final String URL = "jdbc:mariadb://localhost:3306/fryzjer";
+   
     private static final String USER = "root";
+   
     private static final String PASSWORD = "twoje_haslo";
     
 
