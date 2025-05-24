@@ -15,7 +15,7 @@ System rezerwacji do fryzjera to aplikacja webowa napisana w języku Java z wyko
 - Rozdzielenie panelu użytkownika i fryzjera
 - Wylogowywanie i zarządzanie sesją
 
-## 🗂 Struktura projektu
+##  Struktura projektu
 
 ```
 System rezerwacji do fryzjera/
@@ -158,7 +158,7 @@ VALUES ('Stanisław', 'Kowalewski', 'stanislaw.kowalewski@salon.pl', 'stas324', 
 
 
 
-## 👥 Autorzy
+##  Autorzy
 
 - Tomasz Złotkowski  
 - Piotr Sienkiewicz  
