@@ -1,10 +1,10 @@
 # System rezerwacji do fryzjera
 
-## 📌 Opis projektu
+##  Opis projektu
 
 System rezerwacji do fryzjera to aplikacja webowa napisana w języku Java z wykorzystaniem technologii JSP, Servletów oraz integracją z Full Calendar. Umożliwia klientom rezerwację wizyt, przeglądanie dostępnych terminów oraz zarządzanie swoimi rezerwacjami. System posiada także panel fryzjera do zarządzania dostępnością godzin.
 
-## ⚙️ Główne funkcjonalności
+##  Główne funkcjonalności
 
 - Rejestracja i logowanie użytkowników (klientów i fryzjerów)
 - Dodawanie i usuwanie dostępnych godzin przez fryzjera
@@ -15,7 +15,7 @@ System rezerwacji do fryzjera to aplikacja webowa napisana w języku Java z wyko
 - Rozdzielenie panelu użytkownika i fryzjera
 - Wylogowywanie i zarządzanie sesją
 
-## 🗂️ Struktura projektu
+## 🗂 Struktura projektu
 
 ```
 System rezerwacji do fryzjera/
@@ -41,7 +41,7 @@ System rezerwacji do fryzjera/
 └── README.md
 ```
 
-## 🛠️ Technologie
+##  Technologie
 
 - Java 8+
 - JSP & Servlety
@@ -51,14 +51,14 @@ System rezerwacji do fryzjera/
 - Apache Tomcat (rekomendowany)
 - MariaDB / MySQL (opcjonalnie)
 
-## 📦 Zależności (zdefiniowane w `pom.xml`)
+##  Zależności (zdefiniowane w `pom.xml`)
 
 - `javax.servlet-api`
 - `gson`
 - `google-api-client`
 - `mariadb-java-client`
 
-## ▶️ Uruchomienie
+##  Uruchomienie
 
 1. **Importuj projekt do IntelliJ IDEA lub innego IDE z obsługą Maven.**
 2. **Skonfiguruj serwer Tomcat (lub inny serwer aplikacji Java EE).**
@@ -67,7 +67,7 @@ System rezerwacji do fryzjera/
 5. **Uruchom aplikację na serwerze (np. http://localhost:8080).**
 
 
-## 📥 Instalacja MariaDB
+##  Instalacja MariaDB
 
 1. Pobierz MariaDB z oficjalnej strony: https://mariadb.org/download/
 2. Zainstaluj MariaDB (w czasie instalacji zapamiętaj hasło roota).
@@ -75,7 +75,7 @@ System rezerwacji do fryzjera/
 
 ---
 
-## 🛠️ Konfiguracja bazy danych
+##  Konfiguracja bazy danych
 
 1. Zaloguj się do MariaDB:
 
@@ -133,7 +133,7 @@ VALUES ('Stanisław', 'Kowalewski', 'stanislaw.kowalewski@salon.pl', 'stas324', 
 
 ---
 
-## ⚙️ Konfiguracja po stronie aplikacji
+##  Konfiguracja po stronie aplikacji
 
 1. Skonfiguruj połączenie z bazą w klasie DatabaseConnection.java:
 
@@ -152,7 +152,7 @@ VALUES ('Stanisław', 'Kowalewski', 'stanislaw.kowalewski@salon.pl', 'stas324', 
 
 ---
 
-## 📋 Uwagi
+##  Uwagi
 
 - Pamiętaj, aby w bazie dodać przynajmniej jednego użytkownika o roli fryzjer, aby mieć dostęp do widoku zarządzania godzinami 
 
