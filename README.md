@@ -52,18 +52,50 @@ System rezerwacji do fryzjera/
 - MariaDB / MySQL (opcjonalnie)
 
 ## Schemat blokowy działania aplikacji
-index.jsp
-  ↓ (formularz loginu)
-LoginServlet
-  ↓ (ustawia session, sprawdza rolę)
-  └─── Klient → dashboard.jsp
-      ↓ fetch("/dostepne-sloty")
-      ↓ fetch("/zarezerwuj-slot")
-      ↓ fetch("/pobierz-rezerwacje") / (POST /odwolaj-rezerwacje)
-  └─── Fryzjer → fryzjer-dashboard.jsp
-      ↓ fetch("/pobierz-wszystkie-wydarzenia")
-      ↓ fetch("/dodaj-godziny") / fetch("/usun-godziny")
-Wszystko → serwlety → baza danych 
++----------------+     
+|  index.jsp     |   <-- Logowanie (formularz)
++----------------+
+         |
+         v
++--------------------+
+|  LoginServlet      |  <-- Sprawdzenie danych i roli użytkownika
++--------------------+
+     |                         |
+     |                         |
+     v                         v
++------------------+     +-------------------------+
+| dashboard.jsp    |     | fryzjer-dashboard.jsp  |
+| (dla klienta)    |     | (dla fryzjera)         |
++------------------+     +-------------------------+
+     |                         |
+     |                         |
+     v                         v
+[ FullCalendar.js ]      [ FullCalendar.js ]
+     |                         |
+     v                         v
+GET /dostepne-sloty       GET /pobierz-wszystkie-wydarzenia
+     |                         |
+     v                         v
++----------------------+   +------------------------------+
+| DostepneSlotyServlet |   | PobierzWszystkieWydarzenia  |
++----------------------+   +------------------------------+
+
+Dla klienta:                          Dla fryzjera:
+------------                          ---------------
+- Kliknij slot                        - Kliknij slot
+- POST /zarezerwuj-slot              - POST /dodaj-godziny
+- POST /odwolaj-rezerwacje           - POST /usun-godziny
+- GET /pobierz-rezerwacje
+
+        ↓
++-------------------+
+| LogoutServlet     |   <-- Wylogowanie, czyszczenie sesji
++-------------------+
+        ↓
++----------------+
+|  index.jsp     |
++----------------+
+
 
 ##  Zależności (zdefiniowane w `pom.xml`)
 
