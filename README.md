@@ -52,50 +52,61 @@ System rezerwacji do fryzjera/
 - MariaDB / MySQL (opcjonalnie)
 
 ## Schemat blokowy działania aplikacji
-+----------------+     
-|  index.jsp     |   <-- Logowanie (formularz)
-+----------------+
-         |
-         v
-+--------------------+
-|  LoginServlet      |  <-- Sprawdzenie danych i roli użytkownika
-+--------------------+
-     |                         |
-     |                         |
-     v                         v
-+------------------+     +-------------------------+
-| dashboard.jsp    |     | fryzjer-dashboard.jsp  |
-| (dla klienta)    |     | (dla fryzjera)         |
-+------------------+     +-------------------------+
-     |                         |
-     |                         |
-     v                         v
-[ FullCalendar.js ]      [ FullCalendar.js ]
-     |                         |
-     v                         v
-GET /dostepne-sloty       GET /pobierz-wszystkie-wydarzenia
-     |                         |
-     v                         v
-+----------------------+   +------------------------------+
-| DostepneSlotyServlet |   | PobierzWszystkieWydarzenia  |
-+----------------------+   +------------------------------+
+START
+  ↓
+index.jsp
+  ↓ (POST - logowanie)
+LoginServlet
+  ├── jeśli klient → dashboard.jsp
+  └── jeśli fryzjer → fryzjer-dashboard.jsp
 
-Dla klienta:                          Dla fryzjera:
-------------                          ---------------
-- Kliknij slot                        - Kliknij slot
-- POST /zarezerwuj-slot              - POST /dodaj-godziny
-- POST /odwolaj-rezerwacje           - POST /usun-godziny
-- GET /pobierz-rezerwacje
-
+Dla klienta (dashboard.jsp):
+  ↓
+  FullCalendar init
+    ↓ (GET)
+    /dostepne-sloty
+      ↓
+      DostepneSlotyServlet
         ↓
-+-------------------+
-| LogoutServlet     |   <-- Wylogowanie, czyszczenie sesji
-+-------------------+
-        ↓
-+----------------+
-|  index.jsp     |
-+----------------+
+        JSON z wolnymi godzinami
+  ↓
+  Kliknięcie slotu
+    ↓ (POST)
+    /zarezerwuj-slot → ZarezerwujSlotServlet
 
+  ↓
+  Kliknięcie "Moje rezerwacje"
+    ↓ (GET)
+    /pobierz-rezerwacje → PobierzRezerwacjeServlet
+    ↓ (opcjonalnie POST)
+    /odwolaj-rezerwacje → OdwolajRezerwacjeServlet
+
+Dla fryzjera (fryzjer-dashboard.jsp):
+  ↓
+  FullCalendar init
+    ↓ (GET)
+    /pobierz-wszystkie-wydarzenia
+      ↓
+      PobierzWszystkieWydarzeniaServlet
+        ↓
+        JSON z godzinami pracy + rezerwacjami
+
+  ↓
+  Kliknięcie dnia:
+    ↓ (POST)
+    /dodaj-godziny → DodajGodzinyServlet
+
+  ↓
+  Kliknięcie wydarzenia:
+    ↓ (POST)
+    /usun-godziny → UsunGodzinyServlet
+
+  ↓
+  (opcjonalnie) Usuwanie rezerwacji klientów
+
+Koniec:
+  ↓ (GET)
+  LogoutServlet → czyszczenie sesji i powrót do index.jsp
 
 ##  Zależności (zdefiniowane w `pom.xml`)
 
