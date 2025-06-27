@@ -52,63 +52,60 @@ System rezerwacji do fryzjera/
 - MariaDB / MySQL (opcjonalnie)
 
 ## Schemat blokowy działania aplikacji
-[ index.jsp ]
-     │  (logowanie)
-     ▼
-[ LoginServlet ]
-     ├── jeśli klient → [ dashboard.jsp ]
-     └── jeśli fryzjer → [ fryzjer-dashboard.jsp ]
+```index.jsp
+  │
+  ▼ (logowanie)
+LoginServlet
+  ├── jeśli klient  ─▶ dashboard.jsp
+  └── jeśli fryzjer ─▶ fryzjer-dashboard.jsp
 
-───────────────────────────────
-Dla klienta:
-───────────────
-[ dashboard.jsp ]
-     ▼
-[ FullCalendar init ]
-     ▼
-GET /dostepne-sloty
-     ▼
-[ DostepneSlotyServlet ]
-     ▼
-< JSON sloty dostępne >
+────────────────────────────────────────────
+Dla klienta (dashboard.jsp):
 
-Kliknięcie slotu:
-     ▼
-POST /zarezerwuj-slot
-     ▼
-[ ZarezerwujSlotServlet ]
+  FullCalendar init
+    │
+    ▼
+  GET /dostepne-sloty
+    ▼
+  DostepneSlotyServlet
+    ▼
+  < JSON z wolnymi terminami >
 
-Moje rezerwacje:
-     ▼
-GET /pobierz-rezerwacje → [ PobierzRezerwacjeServlet ]
-POST /odwolaj-rezerwacje → [ OdwolajRezerwacjeServlet ]
+  Kliknięcie terminu
+    ▼
+  POST /zarezerwuj-slot
+    ▼
+  ZarezerwujSlotServlet
 
-───────────────────────────────
-Dla fryzjera:
-───────────────
-[ fryzjer-dashboard.jsp ]
-     ▼
-[ FullCalendar init ]
-     ▼
-GET /pobierz-wszystkie-wydarzenia
-     ▼
-[ PobierzWszystkieWydarzeniaServlet ]
-     ▼
-< JSON: godziny + zajęte >
+  Moje rezerwacje:
+    ▼
+  GET /pobierz-rezerwacje ─▶ PobierzRezerwacjeServlet
+  POST /odwolaj-rezerwacje ─▶ OdwolajRezerwacjeServlet
 
-Kliknięcie dnia:
-     ▼
-POST /dodaj-godziny → [ DodajGodzinyServlet ]
+────────────────────────────────────────────
+Dla fryzjera (fryzjer-dashboard.jsp):
 
-Kliknięcie wydarzenia:
-     ▼
-POST /usun-godziny → [ UsunGodzinyServlet ]
+  FullCalendar init
+    │
+    ▼
+  GET /pobierz-wszystkie-wydarzenia
+    ▼
+  PobierzWszystkieWydarzeniaServlet
+    ▼
+  < JSON z godzinami pracy i rezerwacjami >
 
-───────────────────────────────
+  Kliknięcie dnia
+    ▼
+  POST /dodaj-godziny ─▶ DodajGodzinyServlet
+
+  Kliknięcie wydarzenia
+    ▼
+  POST /usun-godziny ─▶ UsunGodzinyServlet
+
+────────────────────────────────────────────
 Wylogowanie:
-───────────────
-GET /logout → [ LogoutServlet ] → powrót do [ index.jsp ]
-
+  GET /logout ─▶ LogoutServlet ─▶ redirect → index.jsp
+```
 
 ##  Zależności (zdefiniowane w `pom.xml`)
 
