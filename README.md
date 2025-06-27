@@ -51,6 +51,20 @@ System rezerwacji do fryzjera/
 - Apache Tomcat (rekomendowany)
 - MariaDB / MySQL (opcjonalnie)
 
+## Schemat blokowy działania aplikacji
+index.jsp
+  ↓ (formularz loginu)
+LoginServlet
+  ↓ (ustawia session, sprawdza rolę)
+  └─── Klient → dashboard.jsp
+      ↓ fetch("/dostepne-sloty")
+      ↓ fetch("/zarezerwuj-slot")
+      ↓ fetch("/pobierz-rezerwacje") / (POST /odwolaj-rezerwacje)
+  └─── Fryzjer → fryzjer-dashboard.jsp
+      ↓ fetch("/pobierz-wszystkie-wydarzenia")
+      ↓ fetch("/dodaj-godziny") / fetch("/usun-godziny")
+Wszystko → serwlety → baza danych 
+
 ##  Zależności (zdefiniowane w `pom.xml`)
 
 - `javax.servlet-api`
