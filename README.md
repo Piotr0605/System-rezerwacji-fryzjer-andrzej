@@ -155,7 +155,7 @@ graph TD
 ##
 ```mermaid
 gantt
-    title Harmonogram Prac - System Rezerwacji (11 Tygodni)
+    title Wykres Gantta
     dateFormat  YYYY-MM-DD
     axisFormat  Tydz %U
     todayMarker off
