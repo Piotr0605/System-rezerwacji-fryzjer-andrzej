@@ -106,49 +106,6 @@ Dla fryzjera (fryzjer-dashboard.jsp):
 Wylogowanie:
   GET /logout ─▶ LogoutServlet ─▶ redirect → index.jsp
 ```
-## Diagram działania aplikacji 
-
-```mermaid
-graph TD
-    %% Logowanie
-    Start((Logowanie)) --> LoginServlet{LoginServlet}
-    LoginServlet -->|Klient| DashK[dashboard.jsp]
-    LoginServlet -->|Fryzjer| DashF[fryzjer-dashboard.jsp]
-
-    %% Panel Klienta
-    subgraph "Panel Klienta"
-    DashK --> CalK[FullCalendar Init]
-    CalK --> GET_S[GET /dostepne-sloty]
-    GET_S --> DS_Serv[DostepneSlotyServlet]
-    DS_Serv --> JSON_S((JSON z terminami))
-    
-    ClickK[Kliknięcie terminu] --> POST_Z[POST /zarezerwuj-slot]
-    POST_Z --> ZS_Serv[ZarezerwujSlotServlet]
-    
-    MyRez[Moje rezerwacje] --> GET_R[GET /pobierz-rezerwacje]
-    GET_R --> PR_Serv[PobierzRezerwacjeServlet]
-    MyRez --> POST_O[POST /odwolaj-rezerwacje]
-    POST_O --> OR_Serv[OdwolajRezerwacjeServlet]
-    end
-
-    %% Panel Fryzjera
-    subgraph "Panel Fryzjera"
-    DashF --> CalF[FullCalendar Init]
-    CalF --> GET_W[GET /pobierz-wszystkie-wydarzenia]
-    GET_W --> PW_Serv[PobierzWszystkieWydarzeniaServlet]
-    PW_Serv --> JSON_W((JSON godziny i rez.))
-    
-    ClickD[Kliknięcie dnia] --> POST_G[POST /dodaj-godziny]
-    POST_G --> DG_Serv[DodajGodzinyServlet]
-    
-    ClickE[Kliknięcie wydarzenia] --> POST_UG[POST /usun-godziny]
-    POST_UG --> UG_Serv[UsunGodzinyServlet]
-    end
-
-    %% Wylogowanie
-    DashK & DashF --> Logout[GET /logout]
-    Logout --> L_Serv[LogoutServlet]
-    L_Serv --> Redirect[index.jsp]
 
 
 ##  Zależności (zdefiniowane w `pom.xml`)
