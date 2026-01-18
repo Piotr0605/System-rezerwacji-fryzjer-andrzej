@@ -107,7 +107,7 @@ Wylogowanie:
   GET /logout ─▶ LogoutServlet ─▶ redirect → index.jsp
 ```
 
-## Diagram działania programu 
+## Diagram działania apliakcji
 
 ```mermaid
 graph TD
