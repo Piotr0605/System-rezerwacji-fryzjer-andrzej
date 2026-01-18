@@ -110,6 +110,7 @@ Wylogowanie:
 ## Diagram działania apliakcji
 
 ```mermaid
+graph LR
 graph TD
     %% Logowanie
     Start((Logowanie)) --> LoginServlet{LoginServlet}
