@@ -107,7 +107,7 @@ Wylogowanie:
   GET /logout ─▶ LogoutServlet ─▶ redirect → index.jsp
 ```
 
-## Diagram działania apliakcji
+## Diagram działania aplikacji
 
 ```mermaid
 
@@ -152,6 +152,36 @@ graph TD
     Logout --> L_Serv[LogoutServlet]
     L_Serv --> Redirect[index.jsp]
 ```
+##
+```mermaid
+gantt
+    title Harmonogram Prac - System Rezerwacji (11 Tygodni)
+    dateFormat  YYYY-MM-DD
+    axisFormat  Tydz %U
+    todayMarker off
+
+    section Tomasz
+    DB Connection & User           :  t1, 2026-01-01, 14d
+    UserStorage                    :  t2, 2026-01-15, 14d
+    Dodaj/Usun Servlet             :  t3, 2026-01-29, 14d
+    Zarezerwuj Servlet             :        t4, 2026-02-12, 14d
+
+    section Piotr
+    Google Calendar                : p1, 2026-01-08, 14d
+    Wydarzenia & Rez               :        p2, 2026-01-29, 14d
+    Sloty & Wyloguj                :        p3, 2026-02-12, 14d
+
+    section Kacper
+    Login & Register               : k1, 2026-01-15, 14d
+    Sesje i Role                   :        k2, 2026-01-29, 14d
+    Validacja & Docs               :        k3, 2026-02-12, 14d
+    Prezentacja                    :        k4, 2026-03-12, 7d
+
+    section Wszyscy
+    Testowanie                     :        w1, 2026-02-26, 14d
+```
+
+
 ##  Zależności (zdefiniowane w `pom.xml`)
 
 - `javax.servlet-api`
